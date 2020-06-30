@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: build asciidoc file to html and upload gh-pages.
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -26,13 +26,27 @@ jobs:
       id: documents
       uses: Analog-inc/asciidoctor-action@master
       with:
-        shellcommand: "asciidoctor README.adoc" 
-    # Use the output from the documents step
-    - name: Save AsciiDoc step
-      uses: actions/upload-artifact@v1
+        shellcommand: "asciidoctor README.adoc"
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        name: Output-document
-        path: ./README.html
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
+    # - name: Upload README.adoc result for asciidoctor_job
+    #   uses: actions/upload-artifact@v1
+    #   with:
+    #     name: Output-document
+    #     path: ./README.html
+
+  # deploy_gh_pages:
+  #   # Use the output from the documents step
+  #   - name: Deploy
+  #     uses: peaceiris/actions-gh-pages@v3
+  #     with:
+  #       github_token: ${{ secrets.GITHUB_TOKEN }}
+  #       publish_dir: ./public
+        
         
     # # Get builder container by using asciidoctor-action
     # - name: Build Asciidoc step
@@ -41,8 +55,8 @@ jobs:
     #   with:
     #     program: "asciidoctor -D docs --backend=html5 -o index.html docs/index.adoc"
 
-    - name: Print exectution time
-      run: echo "Time ${{ steps.documents.outputs.time }}"
+    # - name: Print exectution time
+    #   run: echo "Time ${{ steps.documents.outputs.time }}"
 
     # Runs a set of commands using the runners shell
     # - name: Run a multi-line script
