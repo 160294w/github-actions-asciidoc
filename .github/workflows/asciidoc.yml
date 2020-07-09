@@ -32,7 +32,7 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./doc
+        publish_dir: ./docs
         
     # - name: deploy s3 bucket
     # - name: Upload README.adoc result for asciidoctor_job
