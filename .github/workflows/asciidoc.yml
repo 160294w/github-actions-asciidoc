@@ -26,7 +26,7 @@ jobs:
       id: documents
       uses: Analog-inc/asciidoctor-action@master
       with:
-        shellcommand: "asciidoctor -D ./docs README.adoc"
+        shellcommand: "asciidoctor -D ./docs README.adoc -o index.html"
 
     - name: Deploy gh-pages
       uses: peaceiris/actions-gh-pages@v3
