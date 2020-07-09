@@ -33,35 +33,19 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./docs
-        
-    # - name: deploy s3 bucket
-    # - name: Upload README.adoc result for asciidoctor_job
-    #   uses: actions/upload-artifact@v1
-    #   with:
-    #     name: Output-document
-    #     path: ./README.html
 
-  # deploy_gh_pages:
-  #   # Use the output from the documents step
-  #   - name: Deploy
-  #     uses: peaceiris/actions-gh-pages@v3
-  #     with:
-  #       github_token: ${{ secrets.GITHUB_TOKEN }}
-  #       publish_dir: ./public
-        
-        
-    # # Get builder container by using asciidoctor-action
-    # - name: Build Asciidoc step
-    #   id: adocbuild
-    #   uses: avattathil/asciidoctor-action@master
-    #   with:
-    #     program: "asciidoctor -D docs --backend=html5 -o index.html docs/index.adoc"
+    - name: Set up AWS configuration
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} # ここの環境変数はGithub側のSettingsに登録しておく
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+        aws-region: ap-northeast-1
 
-    # - name: Print exectution time
-    #   run: echo "Time ${{ steps.documents.outputs.time }}"
+    - name: upload S3 bucket
+      # 使うS3のバケット名を環境変数に設定
+      env:
+        S3_UPLOAD_BUCKET: ${{ secrets.S3_UPLOAD_BUCKET }} 
+      run: |
+        aws s3 cp ./index.html s3://$S3_UPLOAD_BUCKET/
 
-    # Runs a set of commands using the runners shell
-    # - name: Run a multi-line script
-    #   run: |
-    #     echo Add other actions to build,
-    #     echo test, and deploy your project.
+
