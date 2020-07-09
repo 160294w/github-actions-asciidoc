@@ -26,13 +26,15 @@ jobs:
       id: documents
       uses: Analog-inc/asciidoctor-action@master
       with:
-        shellcommand: "asciidoctor README.adoc"
+        shellcommand: "asciidoctor -D ./docs README.adoc"
 
-    - name: Deploy
+    - name: Deploy gh-pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./public
+        publish_dir: ./doc
+        
+    # - name: deploy s3 bucket
     # - name: Upload README.adoc result for asciidoctor_job
     #   uses: actions/upload-artifact@v1
     #   with:
