@@ -1,6 +1,7 @@
 === ビルドのステータス
 
 ステータスのバッチ
+
 image::https://github.com/Analog-inc/asciidoctor-action-sample/workflows/CI/badge.svg[StatusBatch]
 
 
