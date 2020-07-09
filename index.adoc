@@ -1,0 +1,4 @@
+= AsciiDocの練習 (レベル0)
+[[README]]
+== ドキュメントインクルード (レベル1)
+include::README.adoc[]
